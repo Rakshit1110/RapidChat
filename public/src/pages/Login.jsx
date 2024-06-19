@@ -24,6 +24,7 @@ export default function Login() {
   }, []);
 
   const handleChange = (event) => {
+    console.log(event);
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
@@ -67,7 +68,7 @@ export default function Login() {
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            <h1>RapidChat</h1>
           </div>
           <input
             type="text"

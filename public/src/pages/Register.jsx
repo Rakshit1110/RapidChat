@@ -65,32 +65,45 @@ export default function Register() {
     event.preventDefault();
     if (handleValidation()) {
       const { email, username, password } = values;
-      const { data } = await axios.post(registerRoute, {
-        username,
-        email,
-        password,
-      });
-
-      if (data.status === false) {
-        toast.error(data.msg, toastOptions);
-      }
-      if (data.status === true) {
-        localStorage.setItem(
-          process.env.REACT_APP_LOCALHOST_KEY,
-          JSON.stringify(data.user)
-        );
-        navigate("/");
+      try {
+        const { data } = await axios.post(registerRoute, {
+          username,
+          email,
+          password,
+        });
+  
+        if (data.status === false) {
+          toast.error(data.msg, toastOptions);
+        }
+        if (data.status === true) {
+          localStorage.setItem(
+            process.env.REACT_APP_LOCALHOST_KEY,
+            JSON.stringify(data.user)
+          );
+          navigate("/");
+        }
+      } catch (error) {
+        if (error.response) {
+          console.error("Server Error:", error.response.data);
+          toast.error(error.response.data.msg || "Server Error", toastOptions);
+        } else if (error.request) {
+          console.error("Network Error:", error.request);
+          toast.error("Network Error. Please try again.", toastOptions);
+        } else {
+          console.error("Error:", error.message);
+          toast.error("Error: " + error.message, toastOptions);
+        }
       }
     }
   };
-
+  
   return (
     <>
       <FormContainer>
         <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
-            <h1>snappy</h1>
+            <h1>RapidChat</h1>
           </div>
           <input
             type="text"
