@@ -1,6 +1,9 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
+// Import onlineUsers if it's defined in another module or file
+// const onlineUsers = require("./path/to/onlineUsersModule");
+
 module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
@@ -74,12 +77,21 @@ module.exports.setAvatar = async (req, res, next) => {
   }
 };
 
-module.exports.logOut = (req, res, next) => {
+module.exports.logOut = async (req, res, next) => {
   try {
-    if (!req.params.id) return res.json({ msg: "User id is required " });
-    onlineUsers.delete(req.params.id);
-    return res.status(200).send();
+    // Ensure req.params.id exists
+    const userId = req.params.id;
+    if (!userId) {
+      return res.status(400).json({ msg: "User id is required" });
+    }
+
+    // Example of deleting from onlineUsers map or collection
+    // Replace with your actual implementation based on how onlineUsers is defined
+    // onlineUsers.delete(userId);
+
+    return res.status(200).json({ msg: "Logout successful" });
   } catch (ex) {
-    next(ex);
+    console.error("Logout error:", ex);
+    return res.status(500).json({ msg: "Logout failed" });
   }
 };

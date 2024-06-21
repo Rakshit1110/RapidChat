@@ -27,7 +27,9 @@ export default function Register() {
     if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
       navigate("/");
     }
-  }, []);
+    // Returning undefined explicitly to ensure the cleanup function is valid
+    return undefined;
+  }, [navigate]);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
@@ -96,7 +98,7 @@ export default function Register() {
       }
     }
   };
-  
+
   return (
     <>
       <FormContainer>
