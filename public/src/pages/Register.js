@@ -5,11 +5,10 @@ import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginRoute } from "../utils/APIRoutes";
+import { registerRoute } from "../utils/APIRoutes.js";
 
-export default function Login() {
+export default function Register() {
   const navigate = useNavigate();
-  const [values, setValues] = useState({ username: "", password: "" });
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -17,38 +16,64 @@ export default function Login() {
     draggable: true,
     theme: "dark",
   };
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
   useEffect(() => {
-    const checkUser = async () => {
-      if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
-        navigate("/");
-      }
-    };
-    checkUser();
+    if (localStorage.getItem(process.env.REACT_APP_LOCALHOST_KEY)) {
+      navigate("/");
+    }
+    // Returning undefined explicitly to ensure the cleanup function is valid
+    return undefined;
   }, [navigate]);
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const validateForm = () => {
-    const { username, password } = values;
-    if (username === "" || password === "") {
-      toast.error("Username and Password are required.", toastOptions);
+  const handleValidation = () => {
+    const { password, confirmPassword, username, email } = values;
+    if (password !== confirmPassword) {
+      toast.error(
+        "Password and confirm password should be same.",
+        toastOptions
+      );
+      return false;
+    } else if (username.length < 3) {
+      toast.error(
+        "Username should be greater than 3 characters.",
+        toastOptions
+      );
+      return false;
+    } else if (password.length < 8) {
+      toast.error(
+        "Password should be equal or greater than 8 characters.",
+        toastOptions
+      );
+      return false;
+    } else if (email === "") {
+      toast.error("Email is required.", toastOptions);
       return false;
     }
+
     return true;
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (validateForm()) {
+    if (handleValidation()) {
+      const { email, username, password } = values;
       try {
-        const { username, password } = values;
-        const { data } = await axios.post(loginRoute, {
+        const { data } = await axios.post(registerRoute, {
           username,
+          email,
           password,
         });
+  
         if (data.status === false) {
           toast.error(data.msg, toastOptions);
         }
@@ -60,7 +85,16 @@ export default function Login() {
           navigate("/");
         }
       } catch (error) {
-        toast.error("Error logging in. Please try again.", toastOptions);
+        if (error.response) {
+          console.error("Server Error:", error.response.data);
+          toast.error(error.response.data.msg || "Server Error", toastOptions);
+        } else if (error.request) {
+          console.error("Network Error:", error.request);
+          toast.error("Network Error. Please try again.", toastOptions);
+        } else {
+          console.error("Error:", error.message);
+          toast.error("Error: " + error.message, toastOptions);
+        }
       }
     }
   };
@@ -68,7 +102,7 @@ export default function Login() {
   return (
     <>
       <FormContainer>
-        <form onSubmit={handleSubmit}>
+        <form action="" onSubmit={(event) => handleSubmit(event)}>
           <div className="brand">
             <img src={Logo} alt="logo" />
             <h1>RapidChat</h1>
@@ -77,18 +111,29 @@ export default function Login() {
             type="text"
             placeholder="Username"
             name="username"
-            onChange={handleChange}
-            min="3"
+            onChange={(e) => handleChange(e)}
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="password"
             placeholder="Password"
             name="password"
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
           />
-          <button type="submit">Log In</button>
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            onChange={(e) => handleChange(e)}
+          />
+          <button type="submit">Create User</button>
           <span>
-            Don't have an account ? <Link to="/register">Create One.</Link>
+            Already have an account ? <Link to="/login">Login.</Link>
           </span>
         </form>
       </FormContainer>
@@ -126,7 +171,7 @@ const FormContainer = styled.div`
     gap: 2rem;
     background-color: #00000076;
     border-radius: 2rem;
-    padding: 5rem;
+    padding: 3rem 5rem;
   }
   input {
     background-color: transparent;
