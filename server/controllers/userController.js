@@ -1,9 +1,6 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 
-// Import onlineUsers if it's defined in another module or file
-// const onlineUsers = require("./path/to/onlineUsersModule");
-
 module.exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
