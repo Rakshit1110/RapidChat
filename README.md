@@ -18,7 +18,7 @@ Ensure you have the following installed on your machine:
 
    ```bash
    git clone https://github.com/Rakshit1110/RapidChat.git
-   cd rapidchat
+   cd RapidChat
    ```
 
 2. Set up the server configuration:
