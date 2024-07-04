@@ -58,7 +58,7 @@ Ensure you have the following installed on your machine:
 2. Install the required packages:
 
    ```bash
-   npm i react-toastify socket.io-client styled-components uuid web-vitals react-icons emoji-picker-react
+   npm i react-toastify socket.io-client styled-components uuid react-icons emoji-picker-react
    ```
 
 3. Start the client:
