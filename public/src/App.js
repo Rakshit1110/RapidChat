@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SetAvatar from "./components/SetAvatar.js";
+import SetAvatar from "./pages/SetAvatar.js";
 import Chat from "./pages/Chat.js";
 import Login from "./pages/Login.js";
 import Register from "./pages/Register.js";

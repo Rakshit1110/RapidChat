@@ -13,7 +13,7 @@ const MessageSchema = mongoose.Schema(
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // adds updatedAt to the schema so that we can sort the messages later
   }
 );
 

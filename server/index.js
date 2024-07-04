@@ -52,11 +52,6 @@ io.on("connection", (socket) => {
   socket.on("add-user", (userId) => {
     onlineUsers.set(userId, socket.id);
     console.log(`User ${userId} connected`);
-
-    // Example: Emit a message history fetch event to the client upon connection
-    // You can implement this based on your application logic
-    // For example:
-    // socket.emit("fetch-message-history");
   });
 
   socket.on("send-msg", (data) => {

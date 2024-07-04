@@ -26,7 +26,6 @@ export default function ChatContainer({ currentChat, socket }) {
         setMessages(response.data);
       } catch (error) {
         console.error("Error fetching messages:", error);
-        // Handle error (e.g., show a toast message)
       }
     };
 
@@ -60,7 +59,6 @@ export default function ChatContainer({ currentChat, socket }) {
       ]);
     } catch (error) {
       console.error("Error sending message:", error);
-      // Handle error (e.g., show a toast message)
     }
   };
 

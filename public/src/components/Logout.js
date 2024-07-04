@@ -25,8 +25,6 @@ export default function Logout() {
       }
     } catch (error) {
       console.error("Logout error:", error);
-      // Handle error appropriately, e.g., show a toast message
-      // Example: toast.error("Logout failed. Please try again.");
     }
   };
 

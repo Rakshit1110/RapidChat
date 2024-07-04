@@ -11,7 +11,7 @@ export default function Register() {
   const navigate = useNavigate();
   const toastOptions = {
     position: "bottom-right",
-    autoClose: 8000,
+    autoClose: 8000, // error message will appear for 8 sec
     pauseOnHover: true,
     draggable: true,
     theme: "dark",

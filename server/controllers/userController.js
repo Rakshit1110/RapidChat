@@ -6,7 +6,7 @@ module.exports.login = async (req, res, next) => {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
     if (!user)
-      return res.json({ msg: "Incorrect Username or Password", status: false });
+      return res.json({ msg: "Incorrect Username", status: false });
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid)
       return res.json({ msg: "Incorrect Username or Password", status: false });
@@ -29,10 +29,10 @@ module.exports.register = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       email,
-      username,
+      username, // as name of property is same so no need to look at the order of properties
       password: hashedPassword,
     });
-    delete user.password;
+    delete user.password; // for security reasons
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);

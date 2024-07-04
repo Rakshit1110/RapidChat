@@ -78,6 +78,7 @@ export default function SetAvatar() {
       {isLoading ? (
         <Container>
           <img src={loader} alt="loader" className="loader" />
+          <h1>Loading</h1>
         </Container>
       ) : (
         <Container>
@@ -126,10 +127,8 @@ const Container = styled.div`
     max-inline-size: 100%;
   }
 
-  .title-container {
-    h1 {
-      color: white;
-    }
+  h1 {
+    color: white;
   }
   .avatars {
     display: flex;

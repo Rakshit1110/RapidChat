@@ -48,6 +48,9 @@ export default function Chat() {
           navigate("/setAvatar");
         }
       }
+      else{
+        navigate("/login")
+      }
     };
 
     fetchContacts();

@@ -12,8 +12,11 @@ export default function ChatInput({ handleSendMsg }) {
     setShowEmojiPicker((prev) => !prev);
   };
 
-  const handleEmojiClick = (event, emojiObject) => {
-    let message = msg + emojiObject.emoji;
+  const handleEmojiClick = (event) => {
+    // console.log("Emoji");
+    // console.log(event);
+    // console.log(emojiObject);
+    let message = msg + event.emoji;
     setMsg(message);
   };
 
@@ -34,12 +37,13 @@ export default function ChatInput({ handleSendMsg }) {
             <Picker
               onEmojiClick={handleEmojiClick}
               disableAutoFocus={true}
-              pickerStyle={{ position: "absolute", bottom: "60px" }}
+              pickerStyle={{ position: "absolute", bottom: "80px", left: "0" }}
               emojiSize={24}
               skinTone={3}
               groupVisibility={{
                 recently_used: false,
               }}
+              
             />
           )}
         </div>
@@ -124,5 +128,5 @@ const Container = styled.div`
         color: white;
       }
     }
-  }
-`;
+  }`
+;
