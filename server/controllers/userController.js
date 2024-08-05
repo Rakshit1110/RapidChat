@@ -76,15 +76,11 @@ module.exports.setAvatar = async (req, res, next) => {
 
 module.exports.logOut = async (req, res, next) => {
   try {
-    // Ensure req.params.id exists
     const userId = req.params.id;
     if (!userId) {
       return res.status(400).json({ msg: "User id is required" });
     }
 
-    // Example of deleting from onlineUsers map or collection
-    // Replace with your actual implementation based on how onlineUsers is defined
-    // onlineUsers.delete(userId);
 
     return res.status(200).json({ msg: "Logout successful" });
   } catch (ex) {
